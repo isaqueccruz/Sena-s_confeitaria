@@ -1,7 +1,10 @@
 {
-  "buildCommand": "pnpm build",
+  "buildCommand": "pnpm install --prod=false && pnpm build",
   "installCommand": "pnpm install",
   "framework": "express",
   "outputDirectory": "dist",
-  "devCommand": "pnpm dev"
+  "devCommand": "pnpm dev",
+  "env": {
+    "NODE_ENV": "production"
+  }
 }
