@@ -1,10 +1,17 @@
 {
   "buildCommand": "pnpm build",
   "installCommand": "pnpm install",
-  "framework": "vite",
+  "framework": "express",
   "outputDirectory": "dist",
   "devCommand": "pnpm dev",
   "env": {
     "NODE_ENV": "production"
+  },
+  "functions": {
+    "dist/index.js": {
+      "runtime": "nodejs20.x",
+      "memory": 1024,
+      "maxDuration": 60
+    }
   }
 }
