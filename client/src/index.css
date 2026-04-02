@@ -1,5 +1,4 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+/* Tailwind CSS is now loaded via CDN in index.html */
 
 @custom-variant dark (&:is(.dark *));
 
