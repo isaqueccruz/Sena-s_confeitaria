@@ -50,3 +50,10 @@
 ## Seed Data
 - [x] 5 sample categories seeded
 - [x] 6 sample products seeded with real images
+
+
+## Bug Fixes
+- [x] Fix 404 error on add products page (/admin/produtos/novo)
+- [x] Update WhatsApp number to 71988461789
+- [x] Update email to isaquec946@gmail.com
+- [x] Prepare for Vercel deployment (vercel.json, .vercelignore)

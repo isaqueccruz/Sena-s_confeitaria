@@ -6,7 +6,7 @@ interface WhatsAppButtonProps {
   floating?: boolean;
 }
 
-const WHATSAPP_NUMBER = "5500000000000"; // Replace with real number
+const WHATSAPP_NUMBER = "5571988461789"; // Taise Sena Confeitaria
 
 export default function WhatsAppButton({ productName, className, floating = false }: WhatsAppButtonProps) {
   const message = productName

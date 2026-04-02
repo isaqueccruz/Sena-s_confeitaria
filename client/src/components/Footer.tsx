@@ -82,21 +82,21 @@ export default function Footer() {
             <ul className="space-y-2 text-sm text-white/60">
               <li>📍 Brasil</li>
               <li>
-                <a
-                  href="https://wa.me/5500000000000"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-accent transition-colors"
-                >
-                  📱 WhatsApp
-                </a>
+              <a
+                href="https://wa.me/5571988461789"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-accent transition-colors"
+              >
+                📱 WhatsApp
+              </a>
               </li>
               <li>
                 <a
-                  href="mailto:contato@taisesena.com.br"
+                  href="mailto:isaquec946@gmail.com"
                   className="hover:text-accent transition-colors"
                 >
-                  ✉️ contato@taisesena.com.br
+                  ✉️ isaquec946@gmail.com
                 </a>
               </li>
               <li>🕐 Seg–Sáb: 8h às 18h</li>

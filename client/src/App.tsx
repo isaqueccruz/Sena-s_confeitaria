@@ -27,6 +27,7 @@ function Router() {
       {/* Admin Routes */}
       <Route path="/admin" component={AdminDashboard} />
       <Route path="/admin/produtos" component={AdminProducts} />
+      <Route path="/admin/produtos/novo" component={AdminProducts} />
       <Route path="/admin/categorias" component={AdminCategories} />
       <Route path="/admin/mensagens" component={AdminMessages} />
 
