@@ -1,10 +1,8 @@
 import "dotenv/config";
 import express from "express";
-import { createServer } from "http";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
 import { appRouter } from "../server/routers";
 import { createContext } from "../server/_core/context";
-import { VercelRequest, VercelResponse } from "@vercel/node";
 
 const app = express();
 
