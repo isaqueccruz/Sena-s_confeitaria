@@ -2,12 +2,13 @@ import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Star, Award, Heart, Clock } from "lucide-react";
+import { ArrowRight, Star, Award, Heart, Clock, Mail, MessageCircle } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import ProductCard from "@/components/ProductCard";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import { useState } from "react";
 
 const HERO_IMAGE = "https://d2xsxph8kpxj0f.cloudfront.net/310519663505194534/PThi8BHL38Un8J878g3nSp/cake-hero_ef634c6a.jpg";
 const ABOUT_IMAGE = "https://d2xsxph8kpxj0f.cloudfront.net/310519663505194534/PThi8BHL38Un8J878g3nSp/cake-wedding_9df40aea.jpg";
@@ -19,8 +20,55 @@ const features = [
   { icon: Star, title: "Clientes Satisfeitos", desc: "Centenas de clientes felizes com nossas criações artesanais." },
 ];
 
+const testimonials = [
+  {
+    name: "Marina Silva",
+    role: "Noiva",
+    text: "O bolo do meu casamento foi perfeito! Taise superou todas as expectativas. Recomendo para todos!",
+    rating: 5,
+  },
+  {
+    name: "Carlos Mendes",
+    role: "Pai de Aniversariante",
+    text: "Meu filho amou o bolo! Ficou lindo e delicioso. Voltaremos com certeza para o próximo aniversário.",
+    rating: 5,
+  },
+  {
+    name: "Juliana Costa",
+    role: "Empresária",
+    text: "Usamos os bolos da Taise para nosso evento corporativo. Todos os clientes pediram o contato!",
+    rating: 5,
+  },
+];
+
+const galleryImages = [
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663505194534/PThi8BHL38Un8J878g3nSp/cake-hero_ef634c6a.jpg",
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663505194534/PThi8BHL38Un8J878g3nSp/cake-wedding_9df40aea.jpg",
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663505194534/PThi8BHL38Un8J878g3nSp/cake-hero_ef634c6a.jpg",
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663505194534/PThi8BHL38Un8J878g3nSp/cake-wedding_9df40aea.jpg",
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663505194534/PThi8BHL38Un8J878g3nSp/cake-hero_ef634c6a.jpg",
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663505194534/PThi8BHL38Un8J878g3nSp/cake-wedding_9df40aea.jpg",
+];
+
+const promotions = [
+  { title: "Combo Festa", desc: "1 Bolo + 2 Doces Finos", price: "R$ 150", discount: "20% OFF" },
+  { title: "Bolo Casamento", desc: "3 Andares Decorado", price: "R$ 350", discount: "15% OFF" },
+  { title: "Doces Finos", desc: "Caixa com 12 Unidades", price: "R$ 80", discount: "10% OFF" },
+];
+
 export default function Home() {
   const { data: featuredProducts, isLoading } = trpc.products.featured.useQuery({ limit: 6 });
+  const [email, setEmail] = useState("");
+  const [subscribed, setSubscribed] = useState(false);
+
+  const handleNewsletterSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email) {
+      setSubscribed(true);
+      setEmail("");
+      setTimeout(() => setSubscribed(false), 3000);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -96,11 +144,63 @@ export default function Home() {
                 transition={{ delay: i * 0.1 }}
                 className="flex flex-col items-center text-center gap-2 p-4"
               >
-                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                  <f.icon className="w-5 h-5 text-primary" />
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center border border-primary/20">
+                  <f.icon className="w-6 h-6 text-primary" />
                 </div>
                 <h3 className="font-serif text-sm font-semibold text-foreground">{f.title}</h3>
                 <p className="text-xs text-muted-foreground leading-relaxed hidden md:block">{f.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Promotions Section ────────────────────────────────────── */}
+      <section className="py-16 md:py-24 bg-gradient-to-b from-secondary/20 to-background">
+        <div className="container">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <Badge variant="outline" className="border-accent text-accent mb-3 text-xs tracking-widest uppercase">
+              🎁 Promoções Especiais
+            </Badge>
+            <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground mb-3">
+              Ofertas do Mês
+            </h2>
+            <p className="text-muted-foreground max-w-md mx-auto text-sm leading-relaxed">
+              Aproveite nossas promoções exclusivas e economize em suas encomendas especiais.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {promotions.map((promo, i) => (
+              <motion.div
+                key={promo.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="relative group"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10 rounded-2xl blur-xl group-hover:blur-2xl transition-all" />
+                <div className="relative bg-white rounded-2xl p-8 border border-border hover:border-primary/50 transition-all">
+                  <div className="absolute top-4 right-4 bg-primary text-white px-3 py-1 rounded-full text-xs font-bold">
+                    {promo.discount}
+                  </div>
+                  <h3 className="font-serif text-xl font-semibold text-foreground mb-2">{promo.title}</h3>
+                  <p className="text-muted-foreground text-sm mb-4">{promo.desc}</p>
+                  <div className="flex items-baseline gap-2 mb-6">
+                    <span className="text-2xl font-bold text-primary">{promo.price}</span>
+                  </div>
+                  <Link href="/contato">
+                    <Button className="w-full bg-primary hover:bg-primary/90 text-white rounded-full">
+                      Encomendar Agora
+                    </Button>
+                  </Link>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -120,10 +220,10 @@ export default function Home() {
               Nossa Vitrine
             </Badge>
             <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground mb-3">
-              Criações em Destaque
+              Nossos Bestsellers
             </h2>
             <p className="text-muted-foreground max-w-md mx-auto text-sm leading-relaxed">
-              Cada peça é uma obra de arte comestível, criada com técnica e paixão pela confeitaria.
+              Conheça os bolos mais pedidos pelos nossos clientes satisfeitos.
             </p>
           </motion.div>
 
@@ -164,6 +264,94 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── Gallery Section ───────────────────────────────────────── */}
+      <section className="py-16 md:py-24 bg-secondary/10">
+        <div className="container">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <Badge variant="outline" className="border-accent text-accent mb-3 text-xs tracking-widest uppercase">
+              📸 Galeria
+            </Badge>
+            <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground mb-3">
+              Nossas Criações
+            </h2>
+            <p className="text-muted-foreground max-w-md mx-auto text-sm leading-relaxed">
+              Veja a beleza e a arte em cada um dos nossos bolos artesanais.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {galleryImages.map((image, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.05 }}
+                className="relative group overflow-hidden rounded-2xl aspect-square"
+              >
+                <img
+                  src={image}
+                  alt={`Criação ${i + 1}`}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors" />
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Testimonials Section ──────────────────────────────────── */}
+      <section className="py-16 md:py-24 bg-background">
+        <div className="container">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <Badge variant="outline" className="border-accent text-accent mb-3 text-xs tracking-widest uppercase">
+              ⭐ Depoimentos
+            </Badge>
+            <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground mb-3">
+              O que Nossos Clientes Dizem
+            </h2>
+            <p className="text-muted-foreground max-w-md mx-auto text-sm leading-relaxed">
+              Histórias reais de clientes satisfeitos com nossas criações.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {testimonials.map((testimonial, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="bg-white rounded-2xl p-8 border border-border hover:border-primary/50 transition-all"
+              >
+                <div className="flex gap-1 mb-4">
+                  {[...Array(testimonial.rating)].map((_, j) => (
+                    <Star key={j} className="w-5 h-5 fill-accent text-accent" />
+                  ))}
+                </div>
+                <p className="text-muted-foreground italic mb-6 leading-relaxed">"{testimonial.text}"</p>
+                <div className="border-t border-border pt-4">
+                  <p className="font-semibold text-foreground">{testimonial.name}</p>
+                  <p className="text-xs text-muted-foreground">{testimonial.role}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── About Teaser ─────────────────────────────────────────── */}
       <section className="py-16 md:py-24 bg-secondary/30">
         <div className="container">
@@ -193,7 +381,7 @@ export default function Home() {
               className="space-y-5"
             >
               <Badge variant="outline" className="border-accent text-accent text-xs tracking-widest uppercase">
-                Nossa História
+                Por Que Escolher Taise
               </Badge>
               <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground leading-tight">
                 Arte e Sabor em Cada Criação
@@ -211,6 +399,52 @@ export default function Home() {
               </Link>
             </motion.div>
           </div>
+        </div>
+      </section>
+
+      {/* ── Newsletter Section ────────────────────────────────────── */}
+      <section className="py-16 md:py-24 bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10">
+        <div className="container">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="max-w-2xl mx-auto text-center"
+          >
+            <Badge variant="outline" className="border-accent text-accent mb-3 text-xs tracking-widest uppercase">
+              📧 Newsletter
+            </Badge>
+            <h2 className="font-serif text-3xl md:text-4xl font-semibold text-foreground mb-3">
+              Receba Nossas Novidades
+            </h2>
+            <p className="text-muted-foreground mb-8 leading-relaxed">
+              Fique por dentro de nossas promoções, novas criações e dicas de confeitaria. Inscreva-se na nossa newsletter!
+            </p>
+
+            <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-3 mb-4">
+              <input
+                type="email"
+                placeholder="Seu melhor email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="flex-1 px-6 py-3 rounded-full border border-border focus:outline-none focus:ring-2 focus:ring-primary/50 bg-white"
+              />
+              <Button type="submit" size="lg" className="bg-primary hover:bg-primary/90 text-white rounded-full px-8 gap-2">
+                Inscrever <Mail className="w-4 h-4" />
+              </Button>
+            </form>
+
+            {subscribed && (
+              <motion.p
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-sm text-green-600 font-medium"
+              >
+                ✓ Obrigado por se inscrever! Verifique seu email.
+              </motion.p>
+            )}
+          </motion.div>
         </div>
       </section>
 
